@@ -1,2 +1,2 @@
 all:
-	g++ final.cpp -g -o sequencial
+	g++ final.cpp -g -o sequencial -Wall
