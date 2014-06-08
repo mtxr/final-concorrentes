@@ -4,7 +4,7 @@
 #include <cstdlib>
 
 //comentar essa linha abaixo para nao imrpimir mensagens
-#define DEBUG_MODE
+#define DEBUG_MODE TRUE
 #define BUFFER_SIZE 50
 #define MASK_SIZE 3
 
@@ -59,26 +59,12 @@ Image_Matrix *smoothPPM(Image_Matrix *in){
     /*int w = out->width;
     int h = out->height;*/
 
-    int meio=(MASK_SIZE-1)/2;
     /*faz a aplicação do filtro da imagem */
     for(int y=0;y<in->height;y++){
         for(int x=0;x<in->width;x++){
-
-            int sumr=0;
-            int sumg=0;
-            int sumb=0;
-            for(int i=-meio;i<meio+1;i++)
-                for(int j=-meio;j<meio+1;j++){
-                    if(x+j>=0 && x+j<in->width && y+i>=0 && y+i<in->height){
-                        sumr+=in->r[x+j][y+i];
-                        sumg+=in->g[x+j][y+i];
-                        sumb+=in->b[x+j][y+i];
-                    }
-                }
-            int d = MASK_SIZE*MASK_SIZE;
-            out->r[x][y]=sumr/d;
-            out->g[x][y]=sumg/d;
-            out->b[x][y]=sumb/d;
+            out->r[x][y]=in->r[x][y];
+            out->g[x][y]=in->g[x][y];
+            out->b[x][y]=in->b[x][y];
         }
     }
     return out;
@@ -125,6 +111,7 @@ Image_Matrix *readPPM(string image){
     for(int y=0;y<h;y++){
         for(int x=0;x<w;x++){
             fscanf(ppmfile,"%d %d %d",&tmp->r[x][y], &tmp->g[x][y], &tmp->b[x][y]);
+            LOG("RGB("<<tmp->r[x][y]<<","<<tmp->g[x][y]<<","<<tmp->b[x][y]<<")");
         }
     }
 
